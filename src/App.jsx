@@ -1,12 +1,11 @@
 import {useEffect} from 'react'
+import { getGreeting } from './utils/graphql/apollo-client'
 
 export default function App() {
 
   useEffect(() => {
     (async () => {
-      const resp = await fetch('http://localhost:80')
-      const r = await resp.json();
-      console.log(r)
+      await getGreeting();
     })()
       
   }, [])
