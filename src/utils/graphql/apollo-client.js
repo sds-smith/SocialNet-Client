@@ -3,6 +3,7 @@ import {
     InMemoryCache,
     gql
   } from "@apollo/client";
+  import { greetingQuery } from "./queries";
 
   export const apolloClient = new ApolloClient({
     uri: 'http://localhost:80/graphql',
@@ -10,11 +11,6 @@ import {
   });
 
 export async function getGreeting() {
-  const query = gql`
-    query {
-      greeting
-    }
-  `;
-  const { data } = await apolloClient.query({query});
+  const { data } = await apolloClient.query({query : greetingQuery});
   console.log(data.greeting);
 }

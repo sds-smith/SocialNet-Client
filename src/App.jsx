@@ -1,14 +1,17 @@
-import {useEffect} from 'react'
-import { getGreeting } from './utils/graphql/apollo-client'
+// import {useEffect} from 'react'
+import { useGreeting } from './utils/hooks/apollo.hooks'
 
 export default function App() {
 
-  useEffect(() => {
-    (async () => {
-      await getGreeting();
-    })()
+  const greeting = useGreeting();
+  console.log(greeting)
+
+  // useEffect(() => {
+  //   (async () => {
+  //     await getGreeting();
+  //   })()
       
-  }, [])
+  // }, [])
 
   return (
     <div>App</div>
