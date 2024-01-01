@@ -1,11 +1,23 @@
-// import {useEffect} from 'react'
-import { useGreeting } from './utils/hooks/apollo.hooks'
+import { useState } from 'react';
+import { getUser, logout } from './utils/auth';
+import Chat from './components/Chat';
+import LoginForm from './components/LoginForm';
 
 export default function App() {
+  const [user, setUser] = useState(getUser);
 
-  const greeting = useGreeting();
+  const handleLogout = () => {
+    logout();
+    setUser(null);
+};
 
   return (
-    <div>{greeting || 'App'}</div>
+    <>
+      {Boolean(user) ? (
+        <Chat user={user} handleLogout={handleLogout}/>
+      ) : (
+        <LoginForm onLogin={setUser} />
+      )}
+    </>
   )
 }
