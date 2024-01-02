@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { getUser, logout } from './utils/auth';
-import Chat from './components/Chat';
+import Home from './components/Home';
 import LoginForm from './components/LoginForm';
+import NavBar from './components/NavBar';
 
 export default function App() {
   const [user, setUser] = useState(getUser);
@@ -13,8 +14,9 @@ export default function App() {
 
   return (
     <>
+      <NavBar user={user} onLogout={handleLogout} />
       {Boolean(user) ? (
-        <Chat user={user} handleLogout={handleLogout}/>
+        <Home user={user} />
       ) : (
         <LoginForm onLogin={setUser} />
       )}
