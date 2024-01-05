@@ -7,9 +7,11 @@ function MessageInput({ onSend }) {
   };
 
   return (
-    <div className="box">
-      <div className="control">
-        <input className="input" type="text" placeholder="Say something..."
+    <div >
+      <div >
+        <input 
+          type="text" 
+          placeholder="Say something..."
           onKeyDown={handleKeyDown}
         />
       </div>

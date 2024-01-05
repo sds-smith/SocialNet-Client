@@ -5,3 +5,14 @@ export const greetingQuery = gql`
     greeting
   }
 `;
+
+export const messagesQuery = gql`
+  query {
+    messages {
+      id
+      user
+      text
+      createdAt
+    }
+  }
+`;

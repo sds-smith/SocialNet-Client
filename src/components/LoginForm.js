@@ -18,42 +18,48 @@ function LoginForm({ onLogin }) {
   };
 
   return (
-    <section className="section">
-      <div className="container">
-        <h1 className="title">
+    <section >
+      <div >
+        <h1 >
           Login
         </h1>
         <form onSubmit={handleLogin}>
-          <div className="field">
-            <label className="label">
+          <div >
+            <label >
               Username
             </label>
-            <div className="control">
-              <input className="input" type="text" required
-                value={username} onChange={(event) => setUsername(event.target.value)}
+            <div >
+              <input 
+                type="text" 
+                required
+                value={username} 
+                onChange={(event) => setUsername(event.target.value)}
               />
             </div>
           </div>
-          <div className="field">
-            <label className="label">
+          <div >
+            <label >
               Password
             </label>
-            <div className="control">
-              <input className="input" type="password" required
-                value={password} onChange={(event) => setPassword(event.target.value)}
+            <div >
+              <input 
+                type="password" 
+                required
+                value={password} 
+                onChange={(event) => setPassword(event.target.value)}
               />
             </div>
           </div>
           {error && (
-            <div className="message is-danger">
-              <p className="message-body">
+            <div >
+              <p >
                 Login failed
               </p>
             </div>
           )}
-          <div className="field">
-          <div className="control">
-              <button type="submit" className="button is-link">
+          <div >
+          <div >
+              <button type="submit" >
                 Login
               </button>
             </div> 

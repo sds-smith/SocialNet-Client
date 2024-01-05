@@ -12,7 +12,10 @@ function MessageList({ user, messages }) {
   }, [messages]);
 
   return (
-    <div ref={containerRef} className="box" style={{ height: '50vh', overflowY: 'scroll' }}>
+    <div 
+      ref={containerRef} 
+      style={{ height: '50vh', overflowY: 'scroll' }}
+    >
       <table>
         <tbody>
           {messages?.map((message) => (
@@ -27,12 +30,12 @@ function MessageList({ user, messages }) {
 function MessageRow({ user, message }) {
   return (
     <tr>
-      <td className="py-1">
-        <span className={(message.user === user) ? 'tag is-primary' : 'tag'}>
+      <td >
+        <span >
           {message.user}
         </span>
       </td>
-      <td className="pl-4 py-1">
+      <td >
         {message.text}
       </td>
     </tr>

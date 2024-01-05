@@ -1,15 +1,15 @@
 function NavBar({ user, onLogout }) {
   return (
-    <nav className="navbar">
-      <div className="navbar-brand">
-        <p className="navbar-item is-size-5 has-text-weight-bold">
+    <nav >
+      <div >
+        <p >
           GraphQL Chat
         </p>
       </div>
-      <div className="navbar-end">
+      <div >
         {Boolean(user) && (
-          <div className="navbar-item">
-            <button className="button is-link" onClick={onLogout}>
+          <div >
+            <button  onClick={onLogout}>
               Logout
             </button>
           </div>
