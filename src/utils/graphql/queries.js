@@ -16,3 +16,13 @@ export const messagesQuery = gql`
     }
   }
 `;
+
+export const addMessageMutation = gql`
+  mutation AddMessageMutation($text: String!) {
+    message: addMessage(text: $text) {
+      id
+      user
+      text
+    }
+  }
+`;
