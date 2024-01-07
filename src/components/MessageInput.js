@@ -1,3 +1,6 @@
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+
 function MessageInput({ onSend }) {
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -7,15 +10,15 @@ function MessageInput({ onSend }) {
   };
 
   return (
-    <div >
-      <div >
-        <input 
+      <Grid item xs={12} >
+        <TextField 
+          fullWidth
+          variant='filled'
           type="text" 
-          placeholder="Say something..."
+          label="Say something..."
           onKeyDown={handleKeyDown}
         />
-      </div>
-    </div>
+      </Grid>
   );
 }
 

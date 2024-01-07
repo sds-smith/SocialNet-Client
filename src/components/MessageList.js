@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
+import MessageRow from './MessageRow';
+import { classes } from '../styles.classes';
 
-function MessageList({ user, messages }) {
+export default function MessageList({ user, messages }) {
   const containerRef = useRef();
 
   useEffect(() => {
@@ -11,35 +13,27 @@ function MessageList({ user, messages }) {
     }
   }, [messages]);
 
+  const messageType = {
+    true: 'user',
+    false: 'other'
+  };
+
   return (
     <div 
       ref={containerRef} 
-      style={{ height: '50vh', overflowY: 'scroll' }}
+      style={{ maxHeight: '50vh', overflowY: 'scroll' }}
     >
-      <table>
+      <table style={classes.messageList}>
         <tbody>
           {messages?.map((message) => (
-            <MessageRow key={message.id} user={user} message={message} />
+            <MessageRow 
+              key={message.id} 
+              messageType={messageType[message.user === user]} 
+              message={message} 
+            />
           ))}
         </tbody>
       </table>
     </div>
   );
-}
-
-function MessageRow({ user, message }) {
-  return (
-    <tr>
-      <td >
-        <span >
-          {message.user}
-        </span>
-      </td>
-      <td >
-        {message.text}
-      </td>
-    </tr>
-  );
-}
-
-export default MessageList;
+};
