@@ -39,5 +39,8 @@ export const classes = {
     },
     author: {
       fontWeight: 'bold'
+    },
+    navContainer: {
+      padding: '10px 20px'
     }
   }
