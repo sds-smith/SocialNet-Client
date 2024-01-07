@@ -2,7 +2,7 @@ import { ApolloClient, ApolloLink, concat, createHttpLink, InMemoryCache, split 
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Kind, OperationTypeNode } from 'graphql';
-// import { createClient as createWsClient } from 'graphql-ws';
+import { createClient as createWsClient } from 'graphql-ws';
 import { getAccessToken } from '../auth';
 
 const authLink = new ApolloLink((operation, forward) => {
@@ -17,7 +17,18 @@ const authLink = new ApolloLink((operation, forward) => {
 
 const httpLink = concat(authLink, createHttpLink({ uri: 'http://localhost:80/graphql' }));
 
-  export const apolloClient = new ApolloClient({
-    link: httpLink,
-    cache: new InMemoryCache()
-  });
+const wsLink = new GraphQLWsLink(createWsClient({
+  url: 'ws://localhost:80/graphql',
+  connectionParams: () => ({ accessToken: getAccessToken() })
+}))
+
+export const apolloClient = new ApolloClient({
+  link: split(isSubscription, wsLink, httpLink),
+  cache: new InMemoryCache()
+});
+
+function isSubscription(operation) {
+  const definition = getMainDefinition(operation.query);
+  return definition.kind === Kind.OPERATION_DEFINITION
+    && definition.operation === OperationTypeNode.SUBSCRIPTION;
+}

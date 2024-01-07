@@ -1,5 +1,5 @@
-import { useQuery, useMutation } from "@apollo/client";
-import { greetingQuery, messagesQuery, addMessageMutation } from "../graphql/queries";
+import { useQuery, useMutation, useSubscription } from "@apollo/client";
+import { greetingQuery, messagesQuery, addMessageMutation, messageAddedSubscription } from "../graphql/queries";
 
 export function useGreeting() {
     const { data } = useQuery(greetingQuery);
@@ -9,8 +9,18 @@ export function useGreeting() {
 
 export function useMessages() {
     const { data } = useQuery(messagesQuery);
+    useSubscription(messageAddedSubscription, {
+        onData: ({ client, data }) => {
+            const newMessage = data.data.message;
+            client.cache.updateQuery({ query: messagesQuery }, ({ messages }) => {
+                return {messages: [...messages, newMessage] };
+            })
+        }
+    })
 
-    return data?.messages;
+    return {
+        messages: data?.messages || [],
+      };
 }
 
 export function useAddMessage() {

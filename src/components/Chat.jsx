@@ -4,7 +4,7 @@ import MessageList from './MessageList';
 
 export default function Chat({ user }) {
 
-  const messages = useMessages();
+  const { messages } = useMessages();
   const { addMessage } = useAddMessage();
 
   const handleSend = async (text) => {
