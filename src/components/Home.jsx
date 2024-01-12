@@ -30,7 +30,7 @@ export default function Home({user}) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Grid container>
+        <Grid container spacing={1}>
           <CheckInFeed user={user} />
         </Grid>
       </CustomTabPanel>
