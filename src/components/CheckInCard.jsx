@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
+import Container from '@mui/material/Container';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
@@ -22,7 +23,7 @@ const ExpandMore = styled((props) => {
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
+  // marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
@@ -42,7 +43,7 @@ export default function CheckInCard({ checkin }) {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="CheckIn">
-            R
+            {checkin.user[0]}
           </Avatar>
         }
         action={
@@ -50,21 +51,23 @@ export default function CheckInCard({ checkin }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={coffee.label}
-        subheader={coffee.roaster}
+        title={checkin.user}
+        subheader={''}
       />
       <CardMedia
         component="img"
         height="194"
-        image={coffee.imageUrl}
+        image={checkin.imageUrl}
         alt={`${coffee.roaster} ${coffee.label}`}
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography>{coffee.label}</Typography>
+        <Typography>{coffee.roaster}</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{border: '1px solid black', borderRadius: '15px', padding: '10px'}}>
           {checkin.userNotes || 'This is the place for the user checking in to leave notes'}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions >
         <Tooltip title="Toast this Checkin">
             <IconButton aria-label="toast this checkin">
               <LocalCafeOutlinedIcon />
@@ -75,15 +78,17 @@ export default function CheckInCard({ checkin }) {
               <ModeCommentRoundedIcon />
             </IconButton>
         </Tooltip>
-        <Typography>View Comments</Typography>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+        <Container fixed sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <Typography sx={{marginLeft: 'auto'}}>View Comments</Typography>
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </Container>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

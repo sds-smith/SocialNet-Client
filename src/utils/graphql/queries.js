@@ -22,6 +22,7 @@ export const checkinsQuery = gql`
     checkins {
       user
       userNotes
+      imageUrl
       coffee {
         description
         label
@@ -30,7 +31,6 @@ export const checkinsQuery = gql`
         singleOrigin
         origin
         process
-        imageUrl
         tastingNotes
       }
     }
@@ -43,6 +43,19 @@ export const addMessageMutation = gql`
       id
       user
       text
+    }
+  }
+`;
+
+export const addCheckinMutation = gql`
+  mutation AddCheckinMutation($input: CheckinInput!) {
+    checkin: addCheckin(input: $input) {
+      id
+      user
+      coffeeID
+      imageUrl
+      userNotes
+      createdAt
     }
   }
 `;

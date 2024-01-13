@@ -1,12 +1,13 @@
 import React from 'react'
 import Grid from '@mui/material/Grid';
-import CheckInCard from './CheckInCard'
+import CheckInCard from './CheckInCard';
+import Sidebar from './Sidebar';
 import { useCheckins } from '../utils/hooks/apollo.hooks';
 
-export default function CheckInFeed() {
+export default function CheckInFeed({user}) {
 
   const { checkins } = useCheckins();
-  
+
 
   return (
     <>
@@ -17,7 +18,7 @@ export default function CheckInFeed() {
         }
       </Grid >
       <Grid item xs={4}>
-        <div style={{backgroundColor: '#FBEEE6'}}>sidebar</div>
+        <Sidebar user={user} />
       </Grid>
     </>
 
