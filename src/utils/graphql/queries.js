@@ -17,6 +17,26 @@ export const messagesQuery = gql`
   }
 `;
 
+export const checkinsQuery = gql`
+  query Checkins {
+    checkins {
+      user
+      userNotes
+      coffee {
+        description
+        label
+        roast
+        roaster
+        singleOrigin
+        origin
+        process
+        imageUrl
+        tastingNotes
+      }
+    }
+  }
+`;
+
 export const addMessageMutation = gql`
   mutation AddMessageMutation($text: String!) {
     message: addMessage(text: $text) {

@@ -31,6 +31,8 @@ const ExpandMore = styled((props) => {
 export default function CheckInCard({ checkin }) {
   const [expanded, setExpanded] = useState(false);
 
+  const { coffee } = checkin;
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -48,14 +50,14 @@ export default function CheckInCard({ checkin }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={checkin.label}
-        subheader={checkin.roaster}
+        title={coffee.label}
+        subheader={coffee.roaster}
       />
       <CardMedia
         component="img"
         height="194"
-        image={checkin.image}
-        alt={`${checkin.roaster} ${checkin.label}`}
+        image={coffee.imageUrl}
+        alt={`${coffee.roaster} ${coffee.label}`}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
