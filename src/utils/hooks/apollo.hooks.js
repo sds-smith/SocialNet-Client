@@ -4,14 +4,9 @@ import {
     addMessageMutation, 
     messageAddedSubscription, 
     checkinsQuery,
-    addCheckinMutation
+    addCheckinMutation,
+    checkinAddedSubscription
 } from "../graphql/queries";
-
-export function useGreeting() {
-    const { data } = useQuery(greetingQuery);
-
-    return data?.greeting;
-}
 
 export function useMessages() {
     const { data } = useQuery(messagesQuery);
@@ -31,6 +26,14 @@ export function useMessages() {
 
 export function useCheckins() {
     const { data } = useQuery(checkinsQuery);
+    useSubscription(checkinAddedSubscription, {
+        onData: ({ client, data }) => {
+            const newCheckin = data.data.checkin;
+            client.cache.updateQuery({ query: checkinsQuery }, ({ checkins }) => {
+                return {checkins: [...checkins, newCheckin] };
+            })
+        }
+    })
 
     return {
         checkins: data?.checkins || []

@@ -52,7 +52,16 @@ export const addCheckinMutation = gql`
     checkin: addCheckin(input: $input) {
       id
       user
-      coffeeID
+      coffee {
+        label
+        roaster
+        singleOrigin
+        origin
+        roast
+        process
+        tastingNotes
+        description
+      }
       imageUrl
       userNotes
       createdAt
@@ -66,6 +75,28 @@ export const messageAddedSubscription = gql`
       id
       user
       text
+    }
+  }
+`;
+
+export const checkinAddedSubscription = gql`
+  subscription CheckinAddedSubscription {
+    checkin: checkinAdded {
+      id
+      user
+      coffee {
+        label
+        roaster
+        singleOrigin
+        origin
+        roast
+        process
+        tastingNotes
+        description
+      }
+      imageUrl
+      userNotes
+      createdAt
     }
   }
 `;
