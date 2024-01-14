@@ -1,23 +1,23 @@
 import { useState, createContext } from "react";
-import { useAddUser } from "../utils/hooks/apollo.hooks";
+import { useUser } from "../utils/hooks/apollo.hooks";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({children}) => {
     const [authenticatedUser, setAuthenticatedUser] = useState(null);
 
-    const { addUser } = useAddUser();
+    const user = useUser();
 
     const authUserExists = authenticatedUser?.uid?.length > 0;
 
-    async function setUser(authUser) {
-        const user = await addUser({
-            displayName : authUser.displayName,
-            email : authUser.email,
-            photoURL : authUser.photoURL,
-            uid : authUser.uid,
+    async function setUser(signedInUser) {
+        const userResponse = await user({
+            displayName : signedInUser.displayName,
+            email : signedInUser.email,
+            photoURL : signedInUser.photoURL,
+            uid : signedInUser.uid,
         })
-        setAuthenticatedUser(user)
+        setAuthenticatedUser(userResponse)
     }
 
     function logoutUser() {

@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useSubscription } from "@apollo/client";
+import { useLazyQuery, useQuery, useMutation, useSubscription } from "@apollo/client";
 import { 
-    addUserMutation,
+    userQuery,
     messagesQuery, 
     addMessageMutation, 
     messageAddedSubscription,
@@ -10,22 +10,25 @@ import {
     checkinAddedSubscription
 } from "../graphql/queries";
 
-export function useAddUser() {
-    const [mutate] = useMutation(addUserMutation);
+export function useUser() {
+    const [getUser] = useLazyQuery(userQuery);
 
-    const addUser = async (user) => {
+    const user = async (input) => {
         try {
-            const { data } = await mutate({
-                variables: { input: user }
-            });
-            return data?.user
+            const { data } = await getUser({ 
+                query: userQuery,
+                variables: { input }
+              });
+
+              return await data?.user;
         } catch (err) {
             console.log(JSON.stringify(err, null, 2));
         }
+
     };
 
-    return { addUser };
-}
+    return user;
+  }
 
 export function useMessages() {
     const { data } = useQuery(messagesQuery);
