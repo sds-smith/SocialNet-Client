@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import { 
+    addUserMutation,
     messagesQuery, 
     addMessageMutation, 
     messageAddedSubscription,
@@ -8,6 +9,23 @@ import {
     addCheckinMutation,
     checkinAddedSubscription
 } from "../graphql/queries";
+
+export function useAddUser() {
+    const [mutate] = useMutation(addUserMutation);
+
+    const addUser = async (user) => {
+        try {
+            const { data } = await mutate({
+                variables: { input: user }
+            });
+            return data?.user
+        } catch (err) {
+            console.log(JSON.stringify(err, null, 2));
+        }
+    };
+
+    return { addUser };
+}
 
 export function useMessages() {
     const { data } = useQuery(messagesQuery);

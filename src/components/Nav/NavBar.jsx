@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -8,9 +8,7 @@ import { classes } from '../../styles.classes';
 import { signInWithGooglePopup, signOutUser } from '../../utils/firebase/firebase.utils';
 
 export default function NavBar({ user, onLogout }) {
-  const { authenticatedUser, setUser, logoutUser, authUserExists } = useContext(UserContext);
-
-  useEffect(() => {console.log(authenticatedUser)},[authenticatedUser])
+  const { setUser, logoutUser, authUserExists } = useContext(UserContext);
 
   const authAction = async () => {
     if (authUserExists) {

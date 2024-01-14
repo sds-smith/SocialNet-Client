@@ -55,6 +55,17 @@ export const checkinsQuery = gql`
   ${coffeeDetailFragment}
 `;
 
+export const addUserMutation = gql`
+  mutation AddUserMutation($input: UserInput!) {
+    user: addUser(input: $input) {
+      displayName
+      email
+      photoURL
+      uid
+    }
+  }
+`;
+
 export const addMessageMutation = gql`
   mutation AddMessageMutation($text: String!) {
     message: addMessage(text: $text) {
