@@ -1,20 +1,34 @@
 import { gql } from "@apollo/client";
 
-export const greetingQuery = gql`
-  query {
-    greeting
+const coffeeDetailFragment = gql`
+  fragment CoffeeDetail on Coffee {
+    description
+    label
+    roast
+    roaster
+    singleOrigin
+    origin
+    process
+    tastingNotes
   }
 `;
+
+const messageDetailFragment = gql`
+  fragment MessageDetail on Message {
+    id
+    user
+    text
+  }
+`
 
 export const messagesQuery = gql`
   query {
     messages {
-      id
-      user
-      text
+      ...MessageDetail,
       createdAt
     }
   }
+  ${messageDetailFragment}
 `;
 
 export const checkinsQuery = gql`
@@ -24,27 +38,20 @@ export const checkinsQuery = gql`
       userNotes
       imageUrl
       coffee {
-        description
-        label
-        roast
-        roaster
-        singleOrigin
-        origin
-        process
-        tastingNotes
+        ...CoffeeDetail
       }
     }
   }
+  ${coffeeDetailFragment}
 `;
 
 export const addMessageMutation = gql`
   mutation AddMessageMutation($text: String!) {
     message: addMessage(text: $text) {
-      id
-      user
-      text
+      ...MessageDetail
     }
   }
+  ${messageDetailFragment}
 `;
 
 export const addCheckinMutation = gql`
@@ -53,30 +60,23 @@ export const addCheckinMutation = gql`
       id
       user
       coffee {
-        label
-        roaster
-        singleOrigin
-        origin
-        roast
-        process
-        tastingNotes
-        description
+        ...CoffeeDetail
       }
       imageUrl
       userNotes
       createdAt
     }
   }
+  ${coffeeDetailFragment}
 `;
 
 export const messageAddedSubscription = gql`
   subscription MessageAddedSubscription {
     message: messageAdded {
-      id
-      user
-      text
+      ...MessageDetail
     }
   }
+  ${messageDetailFragment}
 `;
 
 export const checkinAddedSubscription = gql`
@@ -85,18 +85,12 @@ export const checkinAddedSubscription = gql`
       id
       user
       coffee {
-        label
-        roaster
-        singleOrigin
-        origin
-        roast
-        process
-        tastingNotes
-        description
+        ...CoffeeDetail
       }
       imageUrl
       userNotes
       createdAt
     }
   }
+  ${coffeeDetailFragment}
 `;

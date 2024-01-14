@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import MessageRow from './MessageRow';
-import { classes } from '../styles.classes';
+import { classes } from '../../styles.classes';
 
 export default function MessageList({ user, messages }) {
   const containerRef = useRef();
@@ -21,7 +21,7 @@ export default function MessageList({ user, messages }) {
   return (
     <div 
       ref={containerRef} 
-      style={{ maxHeight: '50vh', overflowY: 'scroll' }}
+      style={classes.messageListContainer}
     >
       <table style={classes.messageList}>
         <tbody>

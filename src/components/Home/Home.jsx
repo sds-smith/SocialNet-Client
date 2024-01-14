@@ -4,8 +4,9 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CustomTabPanel from './CustomTabPanel';
-import Chat from "./Chat";
-import CheckInFeed from './CheckInFeed'
+import Chat from "../Chat/Chat";
+import CheckInFeed from '../Feed/CheckInFeed'
+import { classes } from '../../styles.classes';
 
 function a11yProps(index) {
   return {
@@ -22,7 +23,7 @@ export default function Home({user}) {
   };
   return (
     <>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={classes.homeContainer}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Feed" {...a11yProps(0)} />
           <Tab label="Chat" {...a11yProps(1)} />

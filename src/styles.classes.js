@@ -1,3 +1,5 @@
+import { red } from '@mui/material/colors';
+
 export const classes = {
     paper: {
       padding: '50px',
@@ -42,5 +44,38 @@ export const classes = {
     },
     navContainer: {
       padding: '10px 20px'
+    },
+    checkinCardContainer: {
+      width: '50%', 
+      margin: '30px auto' 
+    },
+    checkinCardAvatar: { 
+      bgcolor: red[500] 
+    },
+    userNotes: {
+      border: '1px solid black', 
+      borderRadius: '15px', 
+      padding: '10px'
+    },
+    expandBtnContainer: {
+      display: 'flex', 
+      flexDirection: 'row', 
+      alignItems: 'center'
+    },
+    expandBtnText: {
+      marginLeft: 'auto'
+    },
+    feedSection: {
+      backgroundColor: '#FBEEE6', 
+      minHeight: '100vh'
+    },
+    homeContainer: { 
+      borderBottom: 1, 
+      borderColor: 'divider' 
+    },
+    messageListContainer: { 
+      maxHeight: '50vh', 
+      overflowY: 'scroll' 
     }
+
   }

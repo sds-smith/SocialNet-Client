@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { classes } from '../styles.classes';
-import { login } from '../utils/auth';
+import { classes } from '../../styles.classes';
+import { login } from '../../utils/auth';
 
 function LoginForm({ onLogin }) {
   const [username, setUsername] = useState('');

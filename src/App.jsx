@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { getUser, logout } from './utils/auth';
-import Home from './components/Home';
-import LoginForm from './components/LoginForm';
-import NavBar from './components/NavBar';
+import Home from './components/Home/Home';
+import LoginForm from './components/Login/LoginForm';
+import NavBar from './components/Nav/NavBar';
 
 export default function App() {
   const [user, setUser] = useState(getUser);

@@ -11,12 +11,12 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import LocalCafeOutlinedIcon from '@mui/icons-material/LocalCafeOutlined';
 import LocalCafeRoundedIcon from '@mui/icons-material/LocalCafeRounded';
 import ModeCommentRoundedIcon from '@mui/icons-material/ModeCommentRounded';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { classes } from '../../styles.classes';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -39,10 +39,10 @@ export default function CheckInCard({ checkin }) {
   };
 
   return (
-    <Card sx={{ width: '50%', margin: '30px auto' }}>
+    <Card sx={classes.checkinCardContainer}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="CheckIn">
+          <Avatar sx={classes.checkinCardAvatar} aria-label="CheckIn">
             {checkin.user[0]}
           </Avatar>
         }
@@ -63,7 +63,7 @@ export default function CheckInCard({ checkin }) {
       <CardContent>
         <Typography>{coffee.label}</Typography>
         <Typography>{coffee.roaster}</Typography>
-        <Typography variant="body2" color="text.secondary" sx={{border: '1px solid black', borderRadius: '15px', padding: '10px'}}>
+        <Typography variant="body2" color="text.secondary" sx={classes.userNotes}>
           {checkin.userNotes || 'This is the place for the user checking in to leave notes'}
         </Typography>
       </CardContent>
@@ -78,8 +78,8 @@ export default function CheckInCard({ checkin }) {
               <ModeCommentRoundedIcon />
             </IconButton>
         </Tooltip>
-        <Container fixed sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-          <Typography sx={{marginLeft: 'auto'}}>View Comments</Typography>
+        <Container fixed sx={classes.expandBtnContainer}>
+          <Typography sx={classes.expandBtnText}>View Comments</Typography>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}

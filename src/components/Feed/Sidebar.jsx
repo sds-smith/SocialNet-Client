@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
-import { useAddCheckin } from "../utils/hooks/apollo.hooks";
+import { useAddCheckin } from "../../utils/hooks/apollo.hooks";
+import { classes } from "../../styles.classes";
 
 export default function Sidebar({user}) {
     const { addCheckin } = useAddCheckin();
@@ -16,7 +17,7 @@ export default function Sidebar({user}) {
     }
 
     return (
-      <div style={{backgroundColor: '#FBEEE6', minHeight: '100%'}}>
+      <div style={classes.feedSection}>
           <Button
               variant='contained'
               onClick={handleClick}

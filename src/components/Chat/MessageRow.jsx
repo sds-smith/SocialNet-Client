@@ -1,5 +1,5 @@
 
-import { classes } from "../styles.classes";
+import { classes } from "../../styles.classes";
 
 export default function MessageRow({ messageType, message }) {
     return (
