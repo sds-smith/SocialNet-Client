@@ -2,6 +2,7 @@ import { gql } from "@apollo/client";
 
 const coffeeDetailFragment = gql`
   fragment CoffeeDetail on Coffee {
+    id
     description
     label
     roast
@@ -29,6 +30,15 @@ export const messagesQuery = gql`
     }
   }
   ${messageDetailFragment}
+`;
+
+export const coffeesQuery = gql`
+  query Coffees {
+      coffees {
+        ...CoffeeDetail
+    }
+  }
+  ${coffeeDetailFragment}
 `;
 
 export const checkinsQuery = gql`

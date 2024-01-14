@@ -2,7 +2,8 @@ import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import { 
     messagesQuery, 
     addMessageMutation, 
-    messageAddedSubscription, 
+    messageAddedSubscription,
+    coffeesQuery,
     checkinsQuery,
     addCheckinMutation,
     checkinAddedSubscription
@@ -22,6 +23,22 @@ export function useMessages() {
     return {
         messages: data?.messages || [],
       };
+}
+
+export function useCoffees() {
+    const { data } = useQuery(coffeesQuery);
+    // useSubscription(checkinAddedSubscription, {
+    //     onData: ({ client, data }) => {
+    //         const newCheckin = data.data.checkin;
+    //         client.cache.updateQuery({ query: checkinsQuery }, ({ checkins }) => {
+    //             return {checkins: [...checkins, newCheckin] };
+    //         })
+    //     }
+    // })
+
+    return {
+        coffees: data?.coffees || []
+    }
 }
 
 export function useCheckins() {

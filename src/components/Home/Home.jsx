@@ -16,7 +16,7 @@ function a11yProps(index) {
 }
 
 export default function Home({user}) {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
 
   const handleChange = (_event, newValue) => {
     setValue(newValue);

@@ -1,29 +1,67 @@
+import { useState } from "react";
 import Button from "@mui/material/Button";
-import { useAddCheckin } from "../../utils/hooks/apollo.hooks";
+import { useCoffees, useAddCheckin } from "../../utils/hooks/apollo.hooks";
+import CoffeeCard from "./CoffeeCard";
+import CreateCheckinDialog from "../shared/CreateCheckinDialog";
 import { classes } from "../../styles.classes";
 
 export default function Sidebar({user}) {
+    const [open, setOpen] = useState(false);
+    const [selectedCoffee, setSelectedCoffee] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
+    const [userNotes, setUserNotes] = useState('');
+
+    const { coffees } = useCoffees();
     const { addCheckin } = useAddCheckin();
 
-    const handleClick = async () => {
-        console.log('create checkin')
-        const checkin = await addCheckin({
-            user,
-            coffeeID: '65a2a16876b80038af437259',
-            imageUrl:"https://i.imgur.com/OZgyMi6.jpg",
-            userNotes: 'It hits'
-        })
-        console.log('Checkin added', checkin)
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+        setSelectedCoffee(null);
+        setImageUrl('');
+        setUserNotes('');
+        setOpen(false);
+    };
+
+    const handleCreateCheckin = async () => {
+        if (selectedCoffee) {
+            console.log('create checkin')
+            await addCheckin({
+                user,
+                coffeeID: selectedCoffee.id,
+                imageUrl,
+                userNotes
+            })
+        }
+        handleClose();
     }
 
     return (
       <div style={classes.feedSection}>
           <Button
               variant='contained'
-              onClick={handleClick}
+              onClick={handleClickOpen}
           >
               Create Checkin
           </Button>
+          {Boolean(coffees?.length) && 
+            coffees.map((coffee) => (      
+                <CoffeeCard key={coffee?.id} coffee={coffee}/>
+            ))
+          }
+          <CreateCheckinDialog 
+            open={open}
+            handleClose={handleClose}
+            coffees={coffees}
+            selectedCoffee={selectedCoffee}
+            setSelectedCoffee={setSelectedCoffee}
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+            userNotes={userNotes}
+            setUserNotes={setUserNotes}
+            handleCreateCheckin={handleCreateCheckin}
+          />
       </div>
     )
 }
