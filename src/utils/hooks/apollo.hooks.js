@@ -1,6 +1,5 @@
 import { useLazyQuery, useQuery, useMutation, useSubscription } from "@apollo/client";
 import { 
-    userQuery,
     messagesQuery, 
     addMessageMutation, 
     messageAddedSubscription,
@@ -9,26 +8,6 @@ import {
     addCheckinMutation,
     checkinAddedSubscription
 } from "../graphql/queries";
-
-export function useUser() {
-    const [getUser] = useLazyQuery(userQuery);
-
-    const user = async (input) => {
-        try {
-            const { data } = await getUser({ 
-                query: userQuery,
-                variables: { input }
-              });
-
-              return await data?.user;
-        } catch (err) {
-            console.log(JSON.stringify(err, null, 2));
-        }
-
-    };
-
-    return user;
-  }
 
 export function useMessages() {
     const { data } = useQuery(messagesQuery);

@@ -22,17 +22,6 @@ const messageDetailFragment = gql`
   }
 `;
 
-export const userQuery = gql`
-  query user($input: UserInput!) {
-    user(input: $input) {
-      displayName
-      email
-      photoURL
-      uid
-    }
-  }
-`;
-
 export const messagesQuery = gql`
   query {
     messages {
