@@ -1,26 +1,21 @@
-import { useState } from 'react';
-import { getUser, logout } from './utils/auth';
+import { useContext } from 'react';
 import Home from './components/Home/Home';
 import LoginForm from './components/Login/LoginForm';
 import NavBar from './components/Nav/NavBar';
-import { UserProvider } from './context/user-context';
+import { UserContext } from './context/user-context';
 
 export default function App() {
-  const [user, setUser] = useState(getUser);
-
-  const handleLogout = () => {
-    logout();
-    setUser(null);
-};
+  const { authUserExists } = useContext(UserContext);
 
   return (
-    <UserProvider>
-      <NavBar user={user} onLogout={handleLogout} />
-      {Boolean(user) ? (
-        <Home user={user} />
+    <>
+      <NavBar />
+      {authUserExists ? (
+        <Home />
       ) : (
-        <LoginForm onLogin={setUser} />
+        <LoginForm />
       )}
-    </UserProvider>
+    </>
+
   )
 }

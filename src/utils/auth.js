@@ -31,6 +31,31 @@ export async function login(username, password) {
   return null;
 }
 
+export async function googleLogin(user) {
+  const { displayName, email, photoURL, uid } = user;
+  const response = await fetch(`${API_URL}/googleLogin`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({ 
+      displayName, 
+      email, 
+      photoURL, 
+      uid
+     }),
+  });
+  if (response.ok) {
+    const { token } = await response.json();
+    localStorage.setItem(ACCESS_TOKEN_KEY, token);
+    return {
+      displayName,
+      photoURL
+    };
+  }
+  return null;
+}
+
 export function logout() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
 }

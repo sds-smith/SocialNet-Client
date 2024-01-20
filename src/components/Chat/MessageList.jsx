@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import MessageRow from './MessageRow';
+import { UserContext } from '../../context/user-context';
 import { classes } from '../../styles.classes';
 
-export default function MessageList({ user, messages }) {
+export default function MessageList({ messages }) {
+  const { authenticatedUser } = useContext(UserContext);
   const containerRef = useRef();
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function MessageList({ user, messages }) {
           {messages?.map((message) => (
             <MessageRow 
               key={message.id} 
-              messageType={messageType[message.user === user]} 
+              messageType={messageType[message.user === authenticatedUser.displayName]} 
               message={message} 
             />
           ))}

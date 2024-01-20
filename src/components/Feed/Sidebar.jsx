@@ -5,7 +5,7 @@ import CoffeeCard from "./CoffeeCard";
 import CreateCheckinDialog from "../shared/CreateCheckinDialog";
 import { classes } from "../../styles.classes";
 
-export default function Sidebar({user}) {
+export default function Sidebar() {
     const [open, setOpen] = useState(false);
     const [selectedCoffee, setSelectedCoffee] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
@@ -28,7 +28,6 @@ export default function Sidebar({user}) {
         if (selectedCoffee) {
             console.log('create checkin')
             await addCheckin({
-                user,
                 coffeeID: selectedCoffee.id,
                 imageUrl,
                 userNotes

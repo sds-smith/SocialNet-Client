@@ -47,7 +47,7 @@ export function useCheckins() {
         onData: ({ client, data }) => {
             const newCheckin = data.data.checkin;
             client.cache.updateQuery({ query: checkinsQuery }, ({ checkins }) => {
-                return {checkins: [...checkins, newCheckin] };
+                return {checkins: [newCheckin, ...checkins] };
             })
         }
     })

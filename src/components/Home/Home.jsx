@@ -15,12 +15,13 @@ function a11yProps(index) {
   };
 }
 
-export default function Home({user}) {
+export default function Home() {
   const [value, setValue] = useState(0);
 
   const handleChange = (_event, newValue) => {
     setValue(newValue);
   };
+  
   return (
     <>
       <Box sx={classes.homeContainer}>
@@ -32,12 +33,12 @@ export default function Home({user}) {
       </Box>
       <CustomTabPanel value={value} index={0}>
         <Grid container spacing={1}>
-          <CheckInFeed user={user} />
+          <CheckInFeed />
         </Grid>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Grid container>
-          <Chat user={user} />
+          <Chat />
         </Grid>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>

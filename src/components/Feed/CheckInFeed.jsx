@@ -5,10 +5,9 @@ import Sidebar from './Sidebar';
 import { useCheckins } from '../../utils/hooks/apollo.hooks';
 import { classes } from '../../styles.classes';
 
-export default function CheckInFeed({user}) {
+export default function CheckInFeed() {
 
   const { checkins } = useCheckins();
-
 
   return (
     <>
@@ -19,7 +18,7 @@ export default function CheckInFeed({user}) {
         }
       </Grid >
       <Grid item xs={4}>
-        <Sidebar user={user} />
+        <Sidebar />
       </Grid>
     </>
 
