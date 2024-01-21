@@ -12,18 +12,16 @@ import {
     signOut,
     onAuthStateChanged,
     NextOrObserver
-} from 'firebase/auth'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+} from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDZdv1AH2pXYILfWRdXpLjNjJp4h1okg7o",
-  authDomain: "cup---cybersipping-for-coffee.firebaseapp.com",
-  projectId: "cup---cybersipping-for-coffee",
-  storageBucket: "cup---cybersipping-for-coffee.appspot.com",
-  messagingSenderId: "218140870336",
-  appId: "1:218140870336:web:ea32890490114ac52fcf25"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

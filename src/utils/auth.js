@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
-const ACCESS_TOKEN_KEY = 'accessToken';
-const API_URL = 'http://localhost:80';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+const ACCESS_TOKEN_KEY = process.env.REACT_APP_ACCESS_TOKEN_KEY;
 
 export function getAccessToken() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -16,7 +16,7 @@ export function getUser() {
 }
 
 export async function login(username, password) {
-  const response = await fetch(`${API_URL}/login`, {
+  const response = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -33,7 +33,7 @@ export async function login(username, password) {
 
 export async function googleLogin(user) {
   const { displayName, email, photoURL, uid } = user;
-  const response = await fetch(`${API_URL}/googleLogin`, {
+  const response = await fetch(`${BASE_URL}/googleLogin`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
