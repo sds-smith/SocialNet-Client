@@ -2,7 +2,6 @@ import { gql } from "@apollo/client";
 
 const coffeeDetailFragment = gql`
   fragment CoffeeDetail on Coffee {
-    id
     description
     label
     roast
@@ -35,7 +34,8 @@ export const messagesQuery = gql`
 export const coffeesQuery = gql`
   query Coffees {
       coffees {
-        ...CoffeeDetail
+        ...CoffeeDetail,
+        id
     }
   }
   ${coffeeDetailFragment}
@@ -48,7 +48,8 @@ export const checkinsQuery = gql`
       userNotes
       imageUrl
       coffee {
-        ...CoffeeDetail
+        ...CoffeeDetail,
+        id
       }
     }
   }
@@ -70,11 +71,21 @@ export const addCheckinMutation = gql`
       id
       user
       coffee {
-        ...CoffeeDetail
+        ...CoffeeDetail,
+        id
       }
       imageUrl
       userNotes
       createdAt
+    }
+  }
+  ${coffeeDetailFragment}
+`;
+
+export const addCoffeeMutation = gql`
+  mutation AddCoffeeMutation($input: CoffeeInput!) {
+    coffee: addCoffee(input: $input) {
+      ...CoffeeDetail
     }
   }
   ${coffeeDetailFragment}
@@ -95,11 +106,22 @@ export const checkinAddedSubscription = gql`
       id
       user
       coffee {
-        ...CoffeeDetail
+        ...CoffeeDetail,
+        id
       }
       imageUrl
       userNotes
       createdAt
+    }
+  }
+  ${coffeeDetailFragment}
+`;
+
+export const coffeeAddedSubscription = gql`
+  subscription CoffeeAddedSubscription {
+    coffee: coffeeAdded {
+        ...CoffeeDetail,
+        id
     }
   }
   ${coffeeDetailFragment}

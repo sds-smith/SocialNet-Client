@@ -11,6 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import CustomAutocomplete from './CustomAutocomplete';
+import AddCoffeeForm from './AddCoffeeForm';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -25,8 +26,9 @@ export default function CreateCheckinDialog(props) {
     const {open, handleClose, coffees, selectedCoffee, setSelectedCoffee, imageUrl, setImageUrl, userNotes, setUserNotes, handleCreateCheckin} = props;
 
     const handleChangeSelectedCoffee = (val) => {
-        setSelectedCoffee(val)
-    }
+      setSelectedCoffee(val)
+    };
+
   return (
       <BootstrapDialog
         onClose={handleClose}
@@ -51,27 +53,31 @@ export default function CreateCheckinDialog(props) {
         <DialogContent dividers>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <CustomAutocomplete
-                      value={selectedCoffee ? `${selectedCoffee?.roaster} ${selectedCoffee?.label}` : null}
-                      options={coffees}
-                      optionEqualityCheck={option => `${option.roaster} ${option.label}`}
-                      handleChange={(newValue)=>{handleChangeSelectedCoffee(newValue)}}
-                    />
+                  <CustomAutocomplete
+                    value={selectedCoffee}
+                    options={coffees}
+                    getOptionString={(option) => (`${option.roaster} ${option.label}`)}
+                    textFieldLabel={selectedCoffee ? `${selectedCoffee.roaster} ${selectedCoffee.label}` : "Search coffees"}
+                    handleChange={handleChangeSelectedCoffee}
+                  />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField 
-                      label='Image URL'
-                      value={imageUrl}
-                      onChange={(event) => {setImageUrl(event.target.value)}}
-                    />
+                  <AddCoffeeForm setSelectedCoffee={setSelectedCoffee} coffees={coffees}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField 
-                      multiline
-                      label='How do you like it?'
-                      value={userNotes}
-                      onChange={(event) => {setUserNotes(event.target.value)}}
-                    />
+                  <TextField 
+                    label='Image URL'
+                    value={imageUrl}
+                    onChange={(event) => {setImageUrl(event.target.value)}}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField 
+                    multiline
+                    label='How do you like it?'
+                    value={userNotes}
+                    onChange={(event) => {setUserNotes(event.target.value)}}
+                  />
                 </Grid>
             </Grid>
         </DialogContent>

@@ -4,6 +4,8 @@ import {
     addMessageMutation, 
     messageAddedSubscription,
     coffeesQuery,
+    addCoffeeMutation,
+    coffeeAddedSubscription,
     checkinsQuery,
     addCheckinMutation,
     checkinAddedSubscription
@@ -27,14 +29,14 @@ export function useMessages() {
 
 export function useCoffees() {
     const { data } = useQuery(coffeesQuery);
-    // useSubscription(checkinAddedSubscription, {
-    //     onData: ({ client, data }) => {
-    //         const newCheckin = data.data.checkin;
-    //         client.cache.updateQuery({ query: checkinsQuery }, ({ checkins }) => {
-    //             return {checkins: [...checkins, newCheckin] };
-    //         })
-    //     }
-    // })
+    useSubscription(coffeeAddedSubscription, {
+        onData: ({ client, data }) => {
+            const newCoffee = data.data.coffee;
+            client.cache.updateQuery({ query: coffeesQuery }, ({ coffees }) => {
+                return {coffees: [...coffees, newCoffee] };
+            })
+        }
+    })
 
     return {
         coffees: data?.coffees || []
@@ -86,4 +88,31 @@ export function useAddCheckin() {
     };
 
     return { addCheckin };
+}
+
+export function useAddCoffee() {
+    const [mutate] = useMutation(addCoffeeMutation);
+
+    const addCoffee = async (coffee) => {
+        const coffeeToAdd = {
+            label: coffee['Label'],
+            roaster: coffee['Roaster'],
+            origin: coffee['Origin'],
+            roast: coffee['Roast'],
+            process: coffee['Process'],
+            tastingNotes: coffee['Tasting Notes'],
+            description: coffee['Description'],
+        }
+        try {
+            const { data } = await mutate({
+                variables: { input: coffeeToAdd }
+            });
+            return data?.coffee
+        } catch (err) {
+            console.log(JSON.stringify(err, null, 2));
+        }
+
+    };
+
+    return { addCoffee };
 }
