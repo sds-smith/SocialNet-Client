@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -8,26 +8,36 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useAddCoffee } from '../../utils/hooks/apollo.hooks';
 
-const defaultCoffeeToAddState = {
-  'Label': '',
-  'Roaster': '',
-  'Origin': '',
-  'Roast': '',
-  'Process': '',
-  'Tasting Notes': '',
-  'Description': '',
-}
-
 export default function AddCoffeeForm({setSelectedCoffee}) {
   const { addCoffee } = useAddCoffee();
 
   const [expanded, setExpanded] = useState(false);
-  const [coffeeToAdd, setCoffeeToAdd] = useState(defaultCoffeeToAddState);
+
+  const labelRef = useRef(null);
+  const roasterRef = useRef(null);
+  const originRef = useRef(null);
+  const roastRef = useRef(null);
+  const processRef = useRef(null);
+  const tastingNotesRef = useRef(null);
+  const descriptionRef = useRef(null);
+
+  const coffeeToAddRef = {
+    'Label': labelRef,
+    'Roaster': roasterRef,
+    'Origin': originRef,
+    'Roast': roastRef,
+    'Process': processRef,
+    'Tasting Notes': tastingNotesRef,
+    'Description': descriptionRef,
+  }
 
   const handleAddCoffee = async () => {
+    const coffeeToAdd = Object.entries(coffeeToAddRef).reduce((coffeeObj, [label, ref]) => ({
+      ...coffeeObj,
+      [label] : ref.current.value
+    }), {});
     const coffee = await addCoffee(coffeeToAdd);
     setSelectedCoffee(await coffee);
-    setCoffeeToAdd(defaultCoffeeToAddState);
     setExpanded(false);
   }
 
@@ -42,16 +52,12 @@ export default function AddCoffeeForm({setSelectedCoffee}) {
           Don't see your coffee in the dropdown list above? Add it here:
         </AccordionSummary>
         <AccordionDetails>
-        {Object.entries(coffeeToAdd).map(([label, value]) => (
+        {Object.entries(coffeeToAddRef).map(([label, ref]) => (
           <TextField 
             required
             key={label}
             label={label}
-            value={value}
-            onChange={(event) => {setCoffeeToAdd({
-              ...coffeeToAdd,
-              [label] : event.target.value
-            })}}
+            inputRef={ref}
           />  
         ))}
         </AccordionDetails>
