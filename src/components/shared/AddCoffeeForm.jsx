@@ -6,12 +6,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 import { useAddCoffee } from '../../utils/hooks/apollo.hooks';
 
 export default function AddCoffeeForm({setSelectedCoffee}) {
   const { addCoffee } = useAddCoffee();
 
   const [expanded, setExpanded] = useState(false);
+  const [displayAlert, setDisplayAlert] = useState(false);
 
   const labelRef = useRef(null);
   const roasterRef = useRef(null);
@@ -36,6 +38,10 @@ export default function AddCoffeeForm({setSelectedCoffee}) {
       ...coffeeObj,
       [label] : ref.current.value
     }), {});
+    if (Object.values(coffeeToAdd).some(val => !Boolean(val))) {
+      setDisplayAlert(true);
+      return;
+    }
     const coffee = await addCoffee(coffeeToAdd);
     setSelectedCoffee(await coffee);
     setExpanded(false);
@@ -64,6 +70,11 @@ export default function AddCoffeeForm({setSelectedCoffee}) {
         <AccordionActions>
           <Button onClick={handleAddCoffee}>Add Coffee</Button>
         </AccordionActions>
+        {displayAlert && 
+          <Alert severity="warning" onClose={() => {setDisplayAlert(false)}}>
+            Please complete required fields.
+          </Alert>
+        }
       </Accordion>
   );
 }
