@@ -9,8 +9,8 @@ export const UserProvider = ({children}) => {
 
     const authUserExists = Boolean(authenticatedUser);
 
-    async function setUser(signedInUser) {
-        setAuthenticatedUser(signedInUser)
+    async function setUser() {
+        setAuthenticatedUser(getUser)
     }
 
     async function logoutUser() {
@@ -27,7 +27,7 @@ export const UserProvider = ({children}) => {
         } else {
           const { user } = await signInWithGooglePopup();
           await googleLogin(user);
-          setUser(user);
+          setUser();
         };
     };
 

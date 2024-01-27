@@ -50,7 +50,8 @@ export async function googleLogin(user) {
     localStorage.setItem(ACCESS_TOKEN_KEY, token);
     return {
       displayName,
-      photoURL
+      photoURL,
+      email
     };
   }
   return null;
