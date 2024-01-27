@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import { useCoffees, useAddCheckin } from "../../utils/hooks/apollo.hooks";
 import CoffeeCard from "./CoffeeCard";
@@ -24,11 +24,8 @@ export default function Sidebar() {
         setOpen(false);
     };
 
-    useEffect(()=>{console.log({coffees,selectedCoffee})},[coffees,selectedCoffee])
-
     const handleCreateCheckin = async () => {
         if (selectedCoffee) {
-            console.log('create checkin')
             await addCheckin({
                 coffeeID: selectedCoffee.id,
                 imageUrl,
