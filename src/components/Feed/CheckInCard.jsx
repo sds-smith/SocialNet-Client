@@ -32,7 +32,7 @@ const ExpandMore = styled((props) => {
 export default function CheckInCard({ checkin }) {
   const [expanded, setExpanded] = useState(false);
 
-  const { coffee } = checkin;
+  const { coffee, user } = checkin;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -43,7 +43,16 @@ export default function CheckInCard({ checkin }) {
       <CardHeader
         avatar={
           <Avatar sx={classes.checkinCardAvatar} aria-label="CheckIn">
-            {checkin.user[0]}
+            {
+              user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  id={user.displayName}
+                  alt={user.displayName}
+                  style={{width: '100%', height: 'auto'}}
+                />
+              ) : (user.displayName[0])
+            }
           </Avatar>
         }
         action={
@@ -51,7 +60,7 @@ export default function CheckInCard({ checkin }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={checkin.user}
+        title={user.displayName}
         subheader={''}
       />
       <CardMedia

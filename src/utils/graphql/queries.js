@@ -44,7 +44,11 @@ export const coffeesQuery = gql`
 export const checkinsQuery = gql`
   query Checkins {
     checkins {
-      user
+      user {
+        displayName,
+        email,
+        photoURL
+      }
       userNotes
       imageUrl
       coffee {
@@ -69,7 +73,11 @@ export const addCheckinMutation = gql`
   mutation AddCheckinMutation($input: CheckinInput!) {
     checkin: addCheckin(input: $input) {
       id
-      user
+      user {
+        displayName,
+        email,
+        photoURL
+      }
       coffee {
         ...CoffeeDetail,
         id
@@ -104,7 +112,11 @@ export const checkinAddedSubscription = gql`
   subscription CheckinAddedSubscription {
     checkin: checkinAdded {
       id
-      user
+      user {
+        displayName,
+        email,
+        photoURL
+      }
       coffee {
         ...CoffeeDetail,
         id
