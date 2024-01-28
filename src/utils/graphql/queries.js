@@ -44,6 +44,7 @@ export const coffeesQuery = gql`
 export const checkinsQuery = gql`
   query Checkins {
     checkins {
+      id
       user {
         displayName,
         email,
@@ -58,6 +59,21 @@ export const checkinsQuery = gql`
     }
   }
   ${coffeeDetailFragment}
+`;
+
+export const toastsQuery = gql`
+  query Toasts($checkinId: ID!) {
+    toasts(checkinId: $checkinId) {
+      id,
+      user {
+        displayName,
+        email,
+        photoURL
+      },
+      checkinId,
+      createdAt
+    }
+  }
 `;
 
 export const addMessageMutation = gql`
@@ -97,6 +113,21 @@ export const addCoffeeMutation = gql`
     }
   }
   ${coffeeDetailFragment}
+`;
+
+export const addToastMutation = gql`
+  mutation AddToastMutation($input: ID!) {
+    toast: addToast(input: $input) {
+      id,
+      user {
+        displayName,
+        email,
+        photoURL
+      },
+      checkinId,
+      createdAt
+    }
+  }
 `;
 
 export const messageAddedSubscription = gql`

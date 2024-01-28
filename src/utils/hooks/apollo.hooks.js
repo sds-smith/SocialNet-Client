@@ -8,7 +8,10 @@ import {
     coffeeAddedSubscription,
     checkinsQuery,
     addCheckinMutation,
-    checkinAddedSubscription
+    checkinAddedSubscription,
+    toastsQuery,
+    addToastMutation,
+    toastAddedSubscription
 } from "../graphql/queries";
 
 export function useMessages() {
@@ -55,9 +58,19 @@ export function useCheckins() {
     })
 
     return {
-        checkins: data?.checkins || []
+        checkins: data?.checkins || [],
     }
 }
+
+export function useToasts(checkinId) {
+    const { data } = useQuery(toastsQuery, {
+        variables: { checkinId },
+    });
+
+    return {
+        toasts: data?.toasts || []
+    };
+};
 
 export function useAddMessage() {
     const [mutate] = useMutation(addMessageMutation);
@@ -115,4 +128,17 @@ export function useAddCoffee() {
     };
 
     return { addCoffee };
+}
+
+export function useAddToast() {
+    const [mutate] = useMutation(addToastMutation);
+
+    const addToast = async (checkinId) => {
+        const { data } = await mutate({
+            variables: { input: checkinId }
+        });
+        return data?.toast
+    };
+
+    return { addToast };
 }

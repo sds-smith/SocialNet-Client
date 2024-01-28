@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
@@ -11,11 +11,12 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import LocalCafeOutlinedIcon from '@mui/icons-material/LocalCafeOutlined';
-import LocalCafeRoundedIcon from '@mui/icons-material/LocalCafeRounded';
 import ModeCommentRoundedIcon from '@mui/icons-material/ModeCommentRounded';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ToastButton from '../shared/ToastButton';
+import { UserContext } from '../../context/user-context';
+import { useToasts, useAddToast } from '../../utils/hooks/apollo.hooks';
 import { classes } from '../../styles.classes';
 
 const ExpandMore = styled((props) => {
@@ -32,7 +33,20 @@ const ExpandMore = styled((props) => {
 export default function CheckInCard({ checkin }) {
   const [expanded, setExpanded] = useState(false);
 
+  const { authenticatedUser } = useContext(UserContext);
+
   const { coffee, user } = checkin;
+
+  const { toasts } = useToasts(Number(checkin.id));
+  const { addToast } = useAddToast();
+
+  const isUserToasted = toasts.some(toast => toast.user.email === authenticatedUser.email);
+
+  const handleToast = () => {
+    if (!isUserToasted) {
+      addToast(Number(checkin.id));
+    }
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -76,12 +90,21 @@ export default function CheckInCard({ checkin }) {
           {checkin.userNotes || 'This is the place for the user checking in to leave notes'}
         </Typography>
       </CardContent>
+      <CardContent>
+        {
+          Boolean(toasts?.length) && (
+            <>
+              <div>Toasted by: </div>
+              {toasts?.map(t => <div>{t.user.displayName}</div>)}
+            </>
+          )
+        }
+      </CardContent>
       <CardActions >
-        <Tooltip title="Toast this Checkin">
-            <IconButton aria-label="toast this checkin">
-              <LocalCafeOutlinedIcon />
-            </IconButton>
-        </Tooltip>
+        <ToastButton 
+          onClick={handleToast} 
+          isUserToasted={isUserToasted}
+        />
         <Tooltip title="Comment on this Checkin">
             <IconButton aria-label="comment on this checkin">
               <ModeCommentRoundedIcon />
