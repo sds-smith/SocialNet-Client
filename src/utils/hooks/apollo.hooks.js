@@ -66,6 +66,21 @@ export function useToasts(checkinId) {
     const { data } = useQuery(toastsQuery, {
         variables: { checkinId },
     });
+    useSubscription(toastAddedSubscription, {
+        variables: { checkinId },
+        onData: ({ client, data }) => {
+            const newToast = data.data.toastAdded;
+            const { toasts } = client.readQuery({
+                query: toastsQuery,
+                variables: { checkinId },
+            });
+            client.writeQuery({
+              query: toastsQuery,
+              data: { toasts: [...toasts, newToast]},
+              variables: { checkinId }
+            });
+        }
+    })
 
     return {
         toasts: data?.toasts || []

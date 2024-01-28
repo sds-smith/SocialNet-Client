@@ -169,3 +169,18 @@ export const coffeeAddedSubscription = gql`
   }
   ${coffeeDetailFragment}
 `;
+
+export const toastAddedSubscription = gql`
+  subscription ToastAddedSubscription($checkinId: ID!) {
+    toastAdded(checkinId: $checkinId) {
+      id,
+      user {
+        displayName,
+        email,
+        photoURL
+      },
+      checkinId,
+      createdAt
+    }
+  }
+`;
