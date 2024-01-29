@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
@@ -6,6 +6,9 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import SendIcon from '@mui/icons-material/Send';
 import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
@@ -33,6 +36,9 @@ const ExpandMore = styled((props) => {
 export default function CheckInCard({ checkin }) {
   const [expanded, setExpanded] = useState(false);
 
+  const commentTextfieldRef = useRef(null);
+  const commentInputRef = useRef(null);
+
   const { authenticatedUser } = useContext(UserContext);
 
   const { coffee, user } = checkin;
@@ -49,13 +55,23 @@ export default function CheckInCard({ checkin }) {
     }
   }
 
+  const handleOpenCommentTextfield = () => {
+    commentTextfieldRef.current.style.display = 'flex';
+  }
+
   const handleComment = () => {
-      addComment(Number(checkin.id), 'this is a comment');
+    addComment(Number(checkin.id), commentInputRef.current.value);
+    commentInputRef.current.value = '';
+    commentTextfieldRef.current.style.display = 'none';
   }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  useEffect(() => {
+    commentTextfieldRef.current.style.display = 'none'
+  },[]);
 
   return (
     <Card sx={classes.checkinCardContainer}>
@@ -104,6 +120,27 @@ export default function CheckInCard({ checkin }) {
             </>
           )
         }
+        <TextField 
+          fullWidth
+          ref={commentTextfieldRef}
+          inputRef={commentInputRef}
+          id="add-comment" 
+          label='Say something about this checkin'
+          variant="filled" 
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="add-comment"
+                  onClick={handleComment}
+                  edge="end"
+                >
+                  <SendIcon/>
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
       </CardContent>
       <CardActions >
         <ToastButton 
@@ -111,7 +148,7 @@ export default function CheckInCard({ checkin }) {
           isUserToasted={isUserToasted}
         />
         <Tooltip title="Comment on this Checkin">
-            <IconButton aria-label="comment on this checkin" onClick={handleComment}>
+            <IconButton aria-label="comment on this checkin" onClick={handleOpenCommentTextfield}>
               <ModeCommentRoundedIcon />
             </IconButton>
         </Tooltip>
