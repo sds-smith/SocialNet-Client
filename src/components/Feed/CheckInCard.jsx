@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ToastButton from '../shared/ToastButton';
 import { UserContext } from '../../context/user-context';
-import { useToasts, useAddToast } from '../../utils/hooks/apollo.hooks';
+import { useToasts, useAddToast, useAddComment } from '../../utils/hooks/apollo.hooks';
 import { classes } from '../../styles.classes';
 
 const ExpandMore = styled((props) => {
@@ -39,6 +39,7 @@ export default function CheckInCard({ checkin }) {
 
   const { toasts } = useToasts(Number(checkin.id));
   const { addToast } = useAddToast();
+  const { addComment } = useAddComment();
 
   const isUserToasted = toasts.some(toast => toast.user.email === authenticatedUser.email);
 
@@ -46,6 +47,10 @@ export default function CheckInCard({ checkin }) {
     if (!isUserToasted) {
       addToast(Number(checkin.id));
     }
+  }
+
+  const handleComment = () => {
+      addComment(Number(checkin.id), 'this is a comment');
   }
 
   const handleExpandClick = () => {
@@ -106,7 +111,7 @@ export default function CheckInCard({ checkin }) {
           isUserToasted={isUserToasted}
         />
         <Tooltip title="Comment on this Checkin">
-            <IconButton aria-label="comment on this checkin">
+            <IconButton aria-label="comment on this checkin" onClick={handleComment}>
               <ModeCommentRoundedIcon />
             </IconButton>
         </Tooltip>

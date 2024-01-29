@@ -11,7 +11,8 @@ import {
     checkinAddedSubscription,
     toastsQuery,
     addToastMutation,
-    toastAddedSubscription
+    toastAddedSubscription,
+    addCommentMutation
 } from "../graphql/queries";
 
 export function useMessages() {
@@ -156,4 +157,17 @@ export function useAddToast() {
     };
 
     return { addToast };
+}
+
+export function useAddComment() {
+    const [mutate] = useMutation(addCommentMutation);
+
+    const addComment = async (checkinId, comment) => {
+        const { data } = await mutate({
+            variables: { input: {checkinId, comment} }
+        });
+        return data?.comment
+    };
+
+    return { addComment };
 }

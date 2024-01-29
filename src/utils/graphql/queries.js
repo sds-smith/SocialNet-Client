@@ -130,6 +130,22 @@ export const addToastMutation = gql`
   }
 `;
 
+export const addCommentMutation = gql`
+  mutation AddCommentMutation($input: CommentInput!) {
+    comment: addComment(input: $input) {
+      id,
+      user {
+        displayName,
+        email,
+        photoURL
+      },
+      comment,
+      checkinId,
+      createdAt
+    }
+  }
+`;
+
 export const messageAddedSubscription = gql`
   subscription MessageAddedSubscription {
     message: messageAdded {
