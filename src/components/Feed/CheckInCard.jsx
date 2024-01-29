@@ -17,9 +17,10 @@ import Typography from '@mui/material/Typography';
 import ModeCommentRoundedIcon from '@mui/icons-material/ModeCommentRounded';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import UserChip from '../shared/UserChip';
 import ToastButton from '../shared/ToastButton';
 import { UserContext } from '../../context/user-context';
-import { useToasts, useAddToast, useAddComment } from '../../utils/hooks/apollo.hooks';
+import { useToasts, useAddToast, useComments, useAddComment } from '../../utils/hooks/apollo.hooks';
 import { classes } from '../../styles.classes';
 
 const ExpandMore = styled((props) => {
@@ -45,6 +46,7 @@ export default function CheckInCard({ checkin }) {
 
   const { toasts } = useToasts(Number(checkin.id));
   const { addToast } = useAddToast();
+  const { comments } = useComments(Number(checkin.id));
   const { addComment } = useAddComment();
 
   const isUserToasted = toasts.some(toast => toast.user.email === authenticatedUser.email);
@@ -116,7 +118,7 @@ export default function CheckInCard({ checkin }) {
           Boolean(toasts?.length) && (
             <>
               <div>Toasted by: </div>
-              {toasts?.map(t => <div>{t.user.displayName}</div>)}
+              {toasts?.map(t => <UserChip user={t.user} />)}
             </>
           )
         }
@@ -166,9 +168,18 @@ export default function CheckInCard({ checkin }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>
-            {checkin.comments || 'Comments'}
+          <Typography >
+            Comments
           </Typography>
+          {
+            Boolean(comments?.length) &&
+            comments.map(comment => (
+              <Typography paragraph>
+                <UserChip user={comment.user} />
+                {` ${comment.comment}`}
+              </Typography>
+            ))
+          }
         </CardContent>
       </Collapse>
     </Card>

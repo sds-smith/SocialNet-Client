@@ -76,6 +76,22 @@ export const toastsQuery = gql`
   }
 `;
 
+export const commentsQuery = gql`
+  query Comments($checkinId: ID!) {
+    comments(checkinId: $checkinId) {
+      id,
+      user {
+        displayName,
+        email,
+        photoURL
+      },
+      comment,
+      checkinId,
+      createdAt
+    }
+  }
+`;
+
 export const addMessageMutation = gql`
   mutation AddMessageMutation($text: String!) {
     message: addMessage(text: $text) {
@@ -195,6 +211,22 @@ export const toastAddedSubscription = gql`
         email,
         photoURL
       },
+      checkinId,
+      createdAt
+    }
+  }
+`;
+
+export const commentAddedSubscription = gql`
+  subscription CommentAddedSubscription($checkinId: ID!) {
+    commentAdded(checkinId: $checkinId) {
+      id,
+      user {
+        displayName,
+        email,
+        photoURL
+      },
+      comment,
       checkinId,
       createdAt
     }

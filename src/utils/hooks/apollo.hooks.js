@@ -12,7 +12,9 @@ import {
     toastsQuery,
     addToastMutation,
     toastAddedSubscription,
-    addCommentMutation
+    commentsQuery,
+    addCommentMutation,
+    commentAddedSubscription
 } from "../graphql/queries";
 
 export function useMessages() {
@@ -85,6 +87,31 @@ export function useToasts(checkinId) {
 
     return {
         toasts: data?.toasts || []
+    };
+};
+
+export function useComments(checkinId) {
+    const { data } = useQuery(commentsQuery, {
+        variables: { checkinId },
+    });
+    useSubscription(commentAddedSubscription, {
+        variables: { checkinId },
+        onData: ({ client, data }) => {
+            const newComment = data.data.commentAdded;
+            const { comments } = client.readQuery({
+                query: commentsQuery,
+                variables: { checkinId },
+            });
+            client.writeQuery({
+              query: commentsQuery,
+              data: { comments: [...comments, newComment]},
+              variables: { checkinId }
+            });
+        }
+    })
+
+    return {
+        comments: data?.comments || []
     };
 };
 
