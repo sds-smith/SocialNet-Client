@@ -15,22 +15,6 @@ export function getUser() {
   return getUserFromToken(token);
 }
 
-export async function login(username, password) {
-  const response = await fetch(`${BASE_URL}/login`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({ username, password }),
-  });
-  if (response.ok) {
-    const { token } = await response.json();
-    localStorage.setItem(ACCESS_TOKEN_KEY, token);
-    return username;
-  }
-  return null;
-}
-
 export async function googleLogin(user) {
   const { displayName, email, photoURL, uid } = user;
   const response = await fetch(`${BASE_URL}/googleLogin`, {
