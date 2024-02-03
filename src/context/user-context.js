@@ -17,8 +17,8 @@ export const UserProvider = ({children}) => {
         setUser();
     }
 
-    async function loginUser() {
-        await login();
+    async function loginUser(authProvider) {
+        await login(authProvider);
         setUser();
     };
 

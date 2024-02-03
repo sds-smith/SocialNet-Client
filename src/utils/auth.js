@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import { signInWithGooglePopup, signOutUser } from './firebase/firebase.utils';
+import { signInWithAuthPopup, signOutUser } from './firebase/firebase.utils';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const ACCESS_TOKEN_KEY = process.env.REACT_APP_ACCESS_TOKEN_KEY;
@@ -16,8 +16,8 @@ export function getUser() {
   return getUserFromToken(token);
 }
 
-export async function login() {
-  const { user } = await signInWithGooglePopup();
+export async function login(authProvider) {
+  const { user } = await signInWithAuthPopup(authProvider);
   const response = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
     headers: {

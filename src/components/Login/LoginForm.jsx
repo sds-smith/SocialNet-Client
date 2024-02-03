@@ -10,6 +10,10 @@ import { classes } from '../../styles.classes';
 function LoginForm() {
   const { loginUser } = useContext(UserContext);
 
+  const handleLogin =  () => {
+    loginUser('google')
+  }
+
   return (
     <Grid container item xs={12}>
       <Paper sx={classes.paper} elevation={5}>
@@ -21,7 +25,7 @@ function LoginForm() {
           </Grid>
           <Grid item xs={12} >
             <Button 
-              onClick={loginUser}
+              onClick={handleLogin}
               variant='contained'
             >
               Login

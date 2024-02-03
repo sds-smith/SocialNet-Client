@@ -29,8 +29,12 @@ googleProvider.setCustomParameters({
     prompt: 'select_account'
 })
 
+const AUTH_PROVIDER_OPTIONS = {
+  google: googleProvider
+}
+
 export const auth = getAuth()
-export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
+export const signInWithAuthPopup = (provider) => signInWithPopup(auth, AUTH_PROVIDER_OPTIONS[provider])
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return
