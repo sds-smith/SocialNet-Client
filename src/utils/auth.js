@@ -21,7 +21,8 @@ export async function login(authProvider) {
   const response = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
     headers: {
-      'content-type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(user)
   });
