@@ -17,7 +17,7 @@ const authLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-const httpLink = concat(authLink, createHttpLink({ uri: `${BASE_URL}/graphql` }));
+const httpLink = concat(authLink, createHttpLink({ uri: `${BASE_URL}/v1` }));
 
 const wsLink = new GraphQLWsLink(createWsClient({
   url: 'ws://localhost:80/graphql',
