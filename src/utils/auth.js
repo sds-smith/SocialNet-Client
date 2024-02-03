@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode';
+import { signInWithGooglePopup, signOutUser } from './firebase/firebase.utils';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const ACCESS_TOKEN_KEY = process.env.REACT_APP_ACCESS_TOKEN_KEY;
@@ -15,9 +16,10 @@ export function getUser() {
   return getUserFromToken(token);
 }
 
-export async function googleLogin(user) {
+export async function login() {
+  const { user } = await signInWithGooglePopup();
   const { displayName, email, photoURL, uid } = user;
-  const response = await fetch(`${BASE_URL}/googleLogin`, {
+  const response = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -41,7 +43,8 @@ export async function googleLogin(user) {
   return null;
 }
 
-export function logout() {
+export async function logout() {
+  await signOutUser();
   localStorage.removeItem(ACCESS_TOKEN_KEY);
 }
 

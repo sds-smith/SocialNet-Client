@@ -1,6 +1,5 @@
 import { useState, createContext } from "react";
-import { getUser, googleLogin, logout } from "../utils/auth";
-import { signInWithGooglePopup, signOutUser } from "../utils/firebase/firebase.utils";
+import { getUser, login, logout } from "../utils/auth";
 
 export const UserContext = createContext();
 
@@ -14,27 +13,20 @@ export const UserProvider = ({children}) => {
     }
 
     async function logoutUser() {
-        await signOutUser() 
-        logout();
-        setAuthenticatedUser(null)
+        await logout();
+        setUser();
     }
 
-    async function authAction() {
-        if (authUserExists) {
-          await signOutUser();
-          logoutUser();
-          logout();
-        } else {
-          const { user } = await signInWithGooglePopup();
-          await googleLogin(user);
-          setUser();
-        };
+    async function loginUser() {
+        await login();
+        setUser();
     };
 
     const value = {
         authenticatedUser,
-        authAction,
-        authUserExists
+        loginUser,
+        authUserExists,
+        logoutUser
     }
 
     return <UserContext.Provider value={value} >{children}</UserContext.Provider>

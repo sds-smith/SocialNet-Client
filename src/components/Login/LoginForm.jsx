@@ -8,7 +8,7 @@ import { UserContext } from '../../context/user-context';
 import { classes } from '../../styles.classes';
 
 function LoginForm() {
-  const { authAction } = useContext(UserContext);
+  const { loginUser } = useContext(UserContext);
 
   return (
     <Grid container item xs={12}>
@@ -21,10 +21,10 @@ function LoginForm() {
           </Grid>
           <Grid item xs={12} >
             <Button 
-              onClick={authAction}
+              onClick={loginUser}
               variant='contained'
             >
-              Google Login
+              Login
             </Button>
           </Grid> 
         </Grid>

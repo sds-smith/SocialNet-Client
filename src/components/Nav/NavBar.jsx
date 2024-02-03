@@ -7,7 +7,7 @@ import { UserContext } from '../../context/user-context';
 import { classes } from '../../styles.classes';
 
 export default function NavBar() {
-  const { authAction, authUserExists } = useContext(UserContext);
+  const { logoutUser, authUserExists } = useContext(UserContext);
 
   return (
     <Box sx={classes.navContainer}>
@@ -24,8 +24,8 @@ export default function NavBar() {
             </Typography>
           </Grid>
         </Grid>
-          <Button variant='contained'  onClick={authAction}>
-            {authUserExists ? 'GOOGLE LOGOUT' : 'GOOGLE LOGIN'}
+          <Button variant='contained'  onClick={logoutUser} disabled={!authUserExists}>
+            LOGOUT
           </Button >
       </Grid>
     </Box>
