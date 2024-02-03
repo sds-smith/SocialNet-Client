@@ -5,7 +5,8 @@ import { Kind, OperationTypeNode } from 'graphql';
 import { createClient as createWsClient } from 'graphql-ws';
 import { getAccessToken } from '../auth';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_HTTP_URL
+const WS_URL = process.env.REACT_APP_BASE_WS_URL
 
 const authLink = new ApolloLink((operation, forward) => {
   const accessToken = getAccessToken();
@@ -20,7 +21,7 @@ const authLink = new ApolloLink((operation, forward) => {
 const httpLink = concat(authLink, createHttpLink({ uri: `${BASE_URL}/v1` }));
 
 const wsLink = new GraphQLWsLink(createWsClient({
-  url: 'ws://localhost:80/v1',
+  url: `${WS_URL}/v1`,
   connectionParams: () => ({ accessToken: getAccessToken() })
 }))
 

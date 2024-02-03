@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { signInWithAuthPopup, signOutUser } from './firebase/firebase.utils';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_BASE_HTTP_URL;
 const ACCESS_TOKEN_KEY = process.env.REACT_APP_ACCESS_TOKEN_KEY;
 
 export function getAccessToken() {
