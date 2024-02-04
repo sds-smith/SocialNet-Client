@@ -1,17 +1,22 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import ProgressSpinner from '../shared/ProgressSpinner';
 import { UserContext } from '../../context/user-context';
 import { classes } from '../../styles.classes';
 
 function LoginForm() {
+  const [authenticatingUser, setAuthenticatingUser] = useState(false);
+
   const { loginUser } = useContext(UserContext);
 
-  const handleLogin =  () => {
-    loginUser('google')
+  const handleLogin = async () => {
+    setAuthenticatingUser(true);
+    await loginUser('google')
+    setAuthenticatingUser(false);
   }
 
   return (
@@ -33,6 +38,7 @@ function LoginForm() {
           </Grid> 
         </Grid>
       </Paper>
+      <ProgressSpinner open={authenticatingUser} />
     </Grid>
   );
 }
