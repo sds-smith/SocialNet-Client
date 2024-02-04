@@ -46,7 +46,7 @@ export const classes = {
       padding: '10px 20px'
     },
     checkinCardContainer: {
-      width: '50%', 
+      width: '90%', 
       margin: '30px auto' 
     },
     checkinCardAvatar: { 

@@ -11,13 +11,15 @@ export default function CheckInFeed() {
 
   return (
     <>
-      <Grid item xs={8} sx={classes.feedSection}>
+      <Grid item xs={12}  lg={8} sx={classes.feedSection}>
         { checkins.map(checkin => (
-           <CheckInCard key={checkin.id} checkin={checkin}/>
+            <Grid item xs={12} lg={7}>
+             <CheckInCard key={checkin.id} checkin={checkin}/>
+            </Grid>
           ))
         }
       </Grid >
-      <Grid item xs={4}>
+      <Grid item xs={0} lg={4} sx={{ display: { xs: 'none', lg: 'flex' } }}>
         <Sidebar />
       </Grid>
     </>
