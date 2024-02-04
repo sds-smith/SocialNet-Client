@@ -73,6 +73,7 @@ export function useToasts(checkinId) {
         variables: { checkinId },
         onData: ({ client, data }) => {
             const newToast = data.data.toastAdded;
+            console.log('[useToasts] toast added!', newToast)
             const { toasts } = client.readQuery({
                 query: toastsQuery,
                 variables: { checkinId },
