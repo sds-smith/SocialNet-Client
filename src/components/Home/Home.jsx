@@ -5,7 +5,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CustomTabPanel from './CustomTabPanel';
 import Chat from "../Chat/Chat";
-import CheckInFeed from '../Feed/CheckInFeed'
+import CheckInFeed from '../Feed/CheckInFeed';
+import Search from '../Search/Search';
 import { classes } from '../../styles.classes';
 
 function a11yProps(index) {
@@ -13,37 +14,41 @@ function a11yProps(index) {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
-}
+};
+
+const tabs = {
+  Feed: {
+    component: CheckInFeed
+  },
+  Search: {
+    component: Search
+  },
+  Chat: {
+    component: Chat
+  }
+};
 
 export default function Home() {
-  const [value, setValue] = useState(0);
+  const [tabValue, setTabValue] = useState(0);
 
   const handleChange = (_event, newValue) => {
-    setValue(newValue);
+    setTabValue(newValue);
   };
   
   return (
     <>
       <Box sx={classes.homeContainer}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Feed" {...a11yProps(0)} />
-          <Tab label="Chat" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+        <Tabs value={tabValue} onChange={handleChange} aria-label="tabs">
+          {Object.keys(tabs).map((label, index) => <Tab label={label} {...a11yProps(index)} />)}
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <Grid container spacing={1}>
-          <CheckInFeed />
-        </Grid>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <Grid container>
-          <Chat />
-        </Grid>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel>
+      {Object.values(tabs).map(({component: Component}, index) => (
+        <CustomTabPanel value={tabValue} index={index}>
+          <Grid container spacing={1}>
+            <Component />
+          </Grid>
+        </CustomTabPanel>
+      ))}
     </>
-  )
-}
+  );
+};

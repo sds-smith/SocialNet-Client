@@ -45,6 +45,9 @@ export const classes = {
     navContainer: {
       padding: '10px 20px'
     },
+    checkInButton: {
+      margin: '30px 0 0 30px'
+    },
     checkinCardContainer: {
       width: '90%', 
       margin: '30px auto' 
@@ -67,7 +70,10 @@ export const classes = {
     },
     feedSection: {
       backgroundColor: '#FBEEE6', 
-      minHeight: '100vh'
+      minHeight: '100vh',
+    },
+    sidebar: { 
+      display: { xs: 'none', lg: 'flex' },
     },
     homeContainer: { 
       borderBottom: 1, 
